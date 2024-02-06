@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "1092706180261",
+    "project_id": "buybrokoli-1",
+    "storage_bucket": "buybrokoli-1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1092706180261:android:62bddb9e01f68bb271014c",
+        "android_client_info": {
+          "package_name": "com.buybrokoli.buybrokoli"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1092706180261-cmn6qn7jrch6k5pt57ftvaqn3qek08p4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.buybrokoli.buybrokoli",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "1092706180261-ga3kgcmg7fu48vtn6hgm2b4rddmdpvo8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.buybrokoli.buybrokoli",
+            "certificate_hash": "40282af0e2b451920aa785b5fb81763e4a38b3bd"
+          }
+        },
+        {
+          "client_id": "1092706180261-s2rp8lr0oog5upuvv0fkvu45osbr64i5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbBFFhaGnAtqZU3zPf1VVZx3NKArQnQXg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1092706180261-nqaiiehmpdhbee74e3vv2g0ld067uvtv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1092706180261-9rfldinlth7un6c31dp62skfm952biru.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.buybrokoli"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

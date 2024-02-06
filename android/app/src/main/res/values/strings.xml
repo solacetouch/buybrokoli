@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+    <string name="app_name">BuyBrokoli</string>
+    <string name="facebook_app_id">326932036281266</string>
+               <string name="fb_login_protocol_scheme">fb326932036281266</string>
+</resources>
