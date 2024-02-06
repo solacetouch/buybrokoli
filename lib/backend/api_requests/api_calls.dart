@@ -183,11 +183,6 @@ class GetEventCall {
 /// Start CRM Integtation Group Code
 
 class CRMIntegtationGroup {
-  static String baseUrl = 'https://buybrokoli.com/api/site';
-  static Map<String, String> headers = {
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer w1d8c1d9cba1e4adbac4023ad6afc4b1f',
-  };
   static FindMemberCall findMemberCall = FindMemberCall();
   static CreatePlanMemberCall createPlanMemberCall = CreatePlanMemberCall();
   static CreateContactCall createContactCall = CreateContactCall();
@@ -198,21 +193,16 @@ class FindMemberCall {
   Future<ApiCallResponse> call({
     String? crmMemberId = '',
   }) async {
-    return ApiManager.instance.makeApiCall(
-      callName: 'Find Member',
-      apiUrl: '${CRMIntegtationGroup.baseUrl}/members/$crmMemberId',
-      callType: ApiCallType.GET,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer w1d8c1d9cba1e4adbac4023ad6afc4b1f',
+    final response = await makeCloudCall(
+      _kPrivateApiFunctionName,
+      {
+        'callName': 'FindMemberCall',
+        'variables': {
+          'crmMemberId': crmMemberId,
+        },
       },
-      params: {},
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      alwaysAllowBody: false,
     );
+    return ApiCallResponse.fromCloudCallResponse(response);
   }
 }
 
@@ -224,33 +214,20 @@ class CreatePlanMemberCall {
     int? group,
     String? documentID = '',
   }) async {
-    final ffApiRequestBody = '''
-{
-  "name": "$name",
-  "email": "$email",
-  "password": "$password",
-  "groups": [
-    $group
-  ],
-  "approved": true
-}''';
-    return ApiManager.instance.makeApiCall(
-      callName: 'Create Plan Member',
-      apiUrl: '${CRMIntegtationGroup.baseUrl}/members',
-      callType: ApiCallType.POST,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer w1d8c1d9cba1e4adbac4023ad6afc4b1f',
+    final response = await makeCloudCall(
+      _kPrivateApiFunctionName,
+      {
+        'callName': 'CreatePlanMemberCall',
+        'variables': {
+          'name': name,
+          'email': email,
+          'password': password,
+          'group': group,
+          'documentID': documentID,
+        },
       },
-      params: {},
-      body: ffApiRequestBody,
-      bodyType: BodyType.JSON,
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      alwaysAllowBody: false,
     );
+    return ApiCallResponse.fromCloudCallResponse(response);
   }
 
   int? contactID(dynamic response) => castToType<int>(getJsonField(
@@ -271,39 +248,20 @@ class CreateContactCall {
     String? documentID = '',
     String? phone = '',
   }) async {
-    final ffApiRequestBody = '''
-{
-  "name": "$name",
-  "email": "$email",
-  "properties": [
-    {
-      "name": "app_user_id",
-      "value": "$documentID"
-    }
-  ],
-  "tags": [
-    "$tag"
-  ],
-  "subscribed": true,
-  "phone": "$phone"
-}''';
-    return ApiManager.instance.makeApiCall(
-      callName: 'Create Contact',
-      apiUrl: '${CRMIntegtationGroup.baseUrl}/contacts',
-      callType: ApiCallType.POST,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer w1d8c1d9cba1e4adbac4023ad6afc4b1f',
+    final response = await makeCloudCall(
+      _kPrivateApiFunctionName,
+      {
+        'callName': 'CreateContactCall',
+        'variables': {
+          'name': name,
+          'email': email,
+          'tag': tag,
+          'documentID': documentID,
+          'phone': phone,
+        },
       },
-      params: {},
-      body: ffApiRequestBody,
-      bodyType: BodyType.JSON,
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      alwaysAllowBody: false,
     );
+    return ApiCallResponse.fromCloudCallResponse(response);
   }
 
   int? contactID(dynamic response) => castToType<int>(getJsonField(
@@ -321,43 +279,21 @@ class UpdateContactCall {
     String? appApprovalStatus = '',
     String? tag = '',
   }) async {
-    final ffApiRequestBody = '''
-{ 
-  "id": "$contactCrmId",
-  "email": "$email",
-  "properties": [{
-     "name": "pageviews",
-     "value":$pageviews
-     },
-     {
-      "name": "app_user_id",
-      "value": "$appUserId"
-     },
-     {
-      "name": "app_approval_status",
-      "value": "$appApprovalStatus"
-     }],
-     "tags": [
-      "$tag"
-      ]
-}''';
-    return ApiManager.instance.makeApiCall(
-      callName: 'Update Contact',
-      apiUrl: '${CRMIntegtationGroup.baseUrl}/contacts/$contactCrmId',
-      callType: ApiCallType.PUT,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer w1d8c1d9cba1e4adbac4023ad6afc4b1f',
+    final response = await makeCloudCall(
+      _kPrivateApiFunctionName,
+      {
+        'callName': 'UpdateContactCall',
+        'variables': {
+          'contactCrmId': contactCrmId,
+          'pageviews': pageviews,
+          'email': email,
+          'appUserId': appUserId,
+          'appApprovalStatus': appApprovalStatus,
+          'tag': tag,
+        },
       },
-      params: {},
-      body: ffApiRequestBody,
-      bodyType: BodyType.TEXT,
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      alwaysAllowBody: false,
     );
+    return ApiCallResponse.fromCloudCallResponse(response);
   }
 }
 
@@ -390,49 +326,6 @@ class EventbritePartnerAuthorizationCall {
         response,
         r'''$.token_type''',
       ));
-}
-
-class InstagramAccessCall {
-  static Future<ApiCallResponse> call({
-    String? redirectUri = 'https://app.buybrokoli.com/businessManager',
-    String? instagramAppId = '326932036281266',
-  }) async {
-    return ApiManager.instance.makeApiCall(
-      callName: 'Instagram Access',
-      apiUrl: 'https://api.instagram.com',
-      callType: ApiCallType.GET,
-      headers: {},
-      params: {
-        'client_id': instagramAppId,
-        'redirect_uri': redirectUri,
-        'scope': "user_profile,user_media",
-        'response_type': "code",
-      },
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      alwaysAllowBody: false,
-    );
-  }
-}
-
-class InstagramTokenCall {
-  static Future<ApiCallResponse> call() async {
-    return ApiManager.instance.makeApiCall(
-      callName: 'Instagram Token',
-      apiUrl: 'https://api.instagram.com/oauth/access_token',
-      callType: ApiCallType.POST,
-      headers: {},
-      params: {},
-      bodyType: BodyType.JSON,
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      alwaysAllowBody: false,
-    );
-  }
 }
 
 class ApiPagingParams {
