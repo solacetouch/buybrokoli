@@ -54,6 +54,16 @@ Future<UserCredential> appleSignIn() async {
     rawNonce: rawNonce,
   );
 
+  // Store given and family name in order to use it in the Signup
+  if (appleCredential.givenName != null) {
+    String? givenName = appleCredential.givenName;
+    String? familyName = appleCredential.familyName;
+    String  applefirst = '$givenName';
+    String  applelast = '$familyName';
+    FFAppState().appleFirst = applefirst.trim();
+    FFAppState().appleLast = applelast.trim();
+  }; 
+
   // Sign in the user with Firebase. If the nonce we generated earlier does
   // not match the nonce in `appleCredential.identityToken`, sign in will fail.
   final user =
