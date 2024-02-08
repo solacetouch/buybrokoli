@@ -130,6 +130,16 @@ class UsersRecord extends FirestoreRecord {
   String get eventbriteToken => _eventbriteToken ?? '';
   bool hasEventbriteToken() => _eventbriteToken != null;
 
+  // "blocked_business" field.
+  List<DocumentReference>? _blockedBusiness;
+  List<DocumentReference> get blockedBusiness => _blockedBusiness ?? const [];
+  bool hasBlockedBusiness() => _blockedBusiness != null;
+
+  // "subscription_package" field.
+  String? _subscriptionPackage;
+  String get subscriptionPackage => _subscriptionPackage ?? '';
+  bool hasSubscriptionPackage() => _subscriptionPackage != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -155,6 +165,8 @@ class UsersRecord extends FirestoreRecord {
     _crmContactId = snapshotData['crm_contact_id'] as String?;
     _crmMemberId = snapshotData['crm_member_id'] as String?;
     _eventbriteToken = snapshotData['eventbrite_token'] as String?;
+    _blockedBusiness = getDataList(snapshotData['blocked_business']);
+    _subscriptionPackage = snapshotData['subscription_package'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -213,6 +225,7 @@ Map<String, dynamic> createUsersRecordData({
   String? crmContactId,
   String? crmMemberId,
   String? eventbriteToken,
+  String? subscriptionPackage,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -238,6 +251,7 @@ Map<String, dynamic> createUsersRecordData({
       'crm_contact_id': crmContactId,
       'crm_member_id': crmMemberId,
       'eventbrite_token': eventbriteToken,
+      'subscription_package': subscriptionPackage,
     }.withoutNulls,
   );
 
@@ -272,7 +286,9 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.visible == e2?.visible &&
         e1?.crmContactId == e2?.crmContactId &&
         e1?.crmMemberId == e2?.crmMemberId &&
-        e1?.eventbriteToken == e2?.eventbriteToken;
+        e1?.eventbriteToken == e2?.eventbriteToken &&
+        listEquality.equals(e1?.blockedBusiness, e2?.blockedBusiness) &&
+        e1?.subscriptionPackage == e2?.subscriptionPackage;
   }
 
   @override
@@ -299,7 +315,9 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.visible,
         e?.crmContactId,
         e?.crmMemberId,
-        e?.eventbriteToken
+        e?.eventbriteToken,
+        e?.blockedBusiness,
+        e?.subscriptionPackage
       ]);
 
   @override

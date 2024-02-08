@@ -187,6 +187,7 @@ class CRMIntegtationGroup {
   static CreatePlanMemberCall createPlanMemberCall = CreatePlanMemberCall();
   static CreateContactCall createContactCall = CreateContactCall();
   static UpdateContactCall updateContactCall = UpdateContactCall();
+  static FindGroupCall findGroupCall = FindGroupCall();
 }
 
 class FindMemberCall {
@@ -204,6 +205,16 @@ class FindMemberCall {
     );
     return ApiCallResponse.fromCloudCallResponse(response);
   }
+
+  List<int>? groups(dynamic response) => (getJsonField(
+        response,
+        r'''$.groups''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<int>(x))
+          .withoutNulls
+          .toList();
 }
 
 class CreatePlanMemberCall {
@@ -295,6 +306,28 @@ class UpdateContactCall {
     );
     return ApiCallResponse.fromCloudCallResponse(response);
   }
+}
+
+class FindGroupCall {
+  Future<ApiCallResponse> call({
+    String? id = '',
+  }) async {
+    final response = await makeCloudCall(
+      _kPrivateApiFunctionName,
+      {
+        'callName': 'FindGroupCall',
+        'variables': {
+          'id': id,
+        },
+      },
+    );
+    return ApiCallResponse.fromCloudCallResponse(response);
+  }
+
+  String? planName(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.name''',
+      ));
 }
 
 /// End CRM Integtation Group Code

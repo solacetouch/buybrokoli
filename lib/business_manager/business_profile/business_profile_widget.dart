@@ -647,9 +647,13 @@ class _BusinessProfileWidgetState extends State<BusinessProfileWidget>
                                                               ),
                                                             ),
                                                           ),
-                                                        if (businessProfileBusinessesRecord
-                                                                .paid ==
-                                                            true)
+                                                        if ((businessProfileBusinessesRecord
+                                                                    .paid ==
+                                                                true) &&
+                                                            !businessProfileBusinessesRecord
+                                                                .blockedUsers
+                                                                .contains(
+                                                                    currentUserReference))
                                                           Expanded(
                                                             child: Padding(
                                                               padding:
@@ -721,12 +725,22 @@ class _BusinessProfileWidgetState extends State<BusinessProfileWidget>
                                                                           'Chat',
                                                                           queryParameters:
                                                                               {
+                                                                            'chatRefDoc':
+                                                                                serializeParam(
+                                                                              buttonChatsRecord,
+                                                                              ParamType.Document,
+                                                                            ),
                                                                             'chatRef':
                                                                                 serializeParam(
                                                                               buttonChatsRecord.reference,
                                                                               ParamType.DocumentReference,
                                                                             ),
                                                                           }.withoutNulls,
+                                                                          extra: <String,
+                                                                              dynamic>{
+                                                                            'chatRefDoc':
+                                                                                buttonChatsRecord,
+                                                                          },
                                                                         );
                                                                       } else {
                                                                         logFirebaseEvent(
@@ -783,12 +797,22 @@ class _BusinessProfileWidgetState extends State<BusinessProfileWidget>
                                                                           'Chat',
                                                                           queryParameters:
                                                                               {
+                                                                            'chatRefDoc':
+                                                                                serializeParam(
+                                                                              _model.newChat,
+                                                                              ParamType.Document,
+                                                                            ),
                                                                             'chatRef':
                                                                                 serializeParam(
                                                                               _model.newChat?.reference,
                                                                               ParamType.DocumentReference,
                                                                             ),
                                                                           }.withoutNulls,
+                                                                          extra: <String,
+                                                                              dynamic>{
+                                                                            'chatRefDoc':
+                                                                                _model.newChat,
+                                                                          },
                                                                         );
                                                                       }
 
@@ -1273,7 +1297,7 @@ class _BusinessProfileWidgetState extends State<BusinessProfileWidget>
                                                           fillColor:
                                                               FlutterFlowTheme.of(
                                                                       context)
-                                                                  .customColor1,
+                                                                  .primary,
                                                           icon: const Icon(
                                                             Icons.chevron_left,
                                                             color: Colors.white,
@@ -1313,7 +1337,7 @@ class _BusinessProfileWidgetState extends State<BusinessProfileWidget>
                                                                       40.0,
                                                                   fillColor: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .customColor1,
+                                                                      .primary,
                                                                   icon: const Icon(
                                                                     Icons
                                                                         .report_outlined,
@@ -1385,7 +1409,7 @@ class _BusinessProfileWidgetState extends State<BusinessProfileWidget>
                                                                         40.0,
                                                                     fillColor: FlutterFlowTheme.of(
                                                                             context)
-                                                                        .customColor1,
+                                                                        .primary,
                                                                     icon: const Icon(
                                                                       Icons
                                                                           .ios_share,
@@ -1634,9 +1658,13 @@ class _BusinessProfileWidgetState extends State<BusinessProfileWidget>
                                                               ),
                                                             ),
                                                           ),
-                                                        if (businessProfileBusinessesRecord
-                                                                .paid ==
-                                                            true)
+                                                        if ((businessProfileBusinessesRecord
+                                                                    .paid ==
+                                                                true) &&
+                                                            !businessProfileBusinessesRecord
+                                                                .blockedUsers
+                                                                .contains(
+                                                                    currentUserReference))
                                                           Expanded(
                                                             flex: 1,
                                                             child: Padding(
@@ -1709,12 +1737,22 @@ class _BusinessProfileWidgetState extends State<BusinessProfileWidget>
                                                                           'Chat',
                                                                           queryParameters:
                                                                               {
+                                                                            'chatRefDoc':
+                                                                                serializeParam(
+                                                                              buttonChatsRecord,
+                                                                              ParamType.Document,
+                                                                            ),
                                                                             'chatRef':
                                                                                 serializeParam(
                                                                               buttonChatsRecord.reference,
                                                                               ParamType.DocumentReference,
                                                                             ),
                                                                           }.withoutNulls,
+                                                                          extra: <String,
+                                                                              dynamic>{
+                                                                            'chatRefDoc':
+                                                                                buttonChatsRecord,
+                                                                          },
                                                                         );
                                                                       } else {
                                                                         logFirebaseEvent(
@@ -1771,12 +1809,22 @@ class _BusinessProfileWidgetState extends State<BusinessProfileWidget>
                                                                           'Chat',
                                                                           queryParameters:
                                                                               {
+                                                                            'chatRefDoc':
+                                                                                serializeParam(
+                                                                              _model.newVendorChat,
+                                                                              ParamType.Document,
+                                                                            ),
                                                                             'chatRef':
                                                                                 serializeParam(
                                                                               _model.newVendorChat?.reference,
                                                                               ParamType.DocumentReference,
                                                                             ),
                                                                           }.withoutNulls,
+                                                                          extra: <String,
+                                                                              dynamic>{
+                                                                            'chatRefDoc':
+                                                                                _model.newVendorChat,
+                                                                          },
                                                                         );
                                                                       }
 

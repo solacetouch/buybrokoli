@@ -164,17 +164,47 @@ class _MessagesWidgetState extends State<MessagesWidget> {
                             onTap: () async {
                               logFirebaseEvent(
                                   'MESSAGES_PAGE_Container_blpkpxyz_ON_TAP');
-                              logFirebaseEvent('Container_navigate_to');
+                              if (userChatListChatsRecord.blocked == true) {
+                                logFirebaseEvent('Container_alert_dialog');
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return WebViewAware(
+                                      child: AlertDialog(
+                                        title: const Text('This chat is unavailable'),
+                                        content: const Text(
+                                            'This chat has been blocked from further messages. '),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: const Text('Ok'),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                );
+                              } else {
+                                logFirebaseEvent('Container_navigate_to');
 
-                              context.pushNamed(
-                                'Chat',
-                                queryParameters: {
-                                  'chatRef': serializeParam(
-                                    userChatListChatsRecord.reference,
-                                    ParamType.DocumentReference,
-                                  ),
-                                }.withoutNulls,
-                              );
+                                context.pushNamed(
+                                  'Chat',
+                                  queryParameters: {
+                                    'chatRefDoc': serializeParam(
+                                      userChatListChatsRecord,
+                                      ParamType.Document,
+                                    ),
+                                    'chatRef': serializeParam(
+                                      userChatListChatsRecord.reference,
+                                      ParamType.DocumentReference,
+                                    ),
+                                  }.withoutNulls,
+                                  extra: <String, dynamic>{
+                                    'chatRefDoc': userChatListChatsRecord,
+                                  },
+                                );
+                              }
                             },
                             child: Container(
                               height: 92.4,

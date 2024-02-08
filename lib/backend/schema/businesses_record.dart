@@ -282,6 +282,11 @@ class BusinessesRecord extends FirestoreRecord {
   String get metaIgUserID => _metaIgUserID ?? '';
   bool hasMetaIgUserID() => _metaIgUserID != null;
 
+  // "blocked_users" field.
+  List<DocumentReference>? _blockedUsers;
+  List<DocumentReference> get blockedUsers => _blockedUsers ?? const [];
+  bool hasBlockedUsers() => _blockedUsers != null;
+
   void _initializeFields() {
     _vendorName = snapshotData['vendor_name'] as String?;
     _createdAt = snapshotData['created_at'] as DateTime?;
@@ -337,6 +342,7 @@ class BusinessesRecord extends FirestoreRecord {
     _metaIgCode = snapshotData['meta_ig_code'] as String?;
     _metaShortAccessToken = snapshotData['meta_short_access_token'] as String?;
     _metaIgUserID = snapshotData['meta_ig_userID'] as String?;
+    _blockedUsers = getDataList(snapshotData['blocked_users']);
   }
 
   static CollectionReference get collection =>
@@ -475,6 +481,13 @@ class BusinessesRecord extends FirestoreRecord {
           'meta_ig_code': snapshot.data['meta_ig_code'],
           'meta_short_access_token': snapshot.data['meta_short_access_token'],
           'meta_ig_userID': snapshot.data['meta_ig_userID'],
+          'blocked_users': safeGet(
+            () => convertAlgoliaParam<DocumentReference>(
+              snapshot.data['blocked_users'],
+              ParamType.DocumentReference,
+              true,
+            ).toList(),
+          ),
         },
         BusinessesRecord.collection.doc(snapshot.objectID),
       );
@@ -678,7 +691,8 @@ class BusinessesRecordDocumentEquality implements Equality<BusinessesRecord> {
         e1?.eventbriteToken == e2?.eventbriteToken &&
         e1?.metaIgCode == e2?.metaIgCode &&
         e1?.metaShortAccessToken == e2?.metaShortAccessToken &&
-        e1?.metaIgUserID == e2?.metaIgUserID;
+        e1?.metaIgUserID == e2?.metaIgUserID &&
+        listEquality.equals(e1?.blockedUsers, e2?.blockedUsers);
   }
 
   @override
@@ -735,7 +749,8 @@ class BusinessesRecordDocumentEquality implements Equality<BusinessesRecord> {
         e?.eventbriteToken,
         e?.metaIgCode,
         e?.metaShortAccessToken,
-        e?.metaIgUserID
+        e?.metaIgUserID,
+        e?.blockedUsers
       ]);
 
   @override
