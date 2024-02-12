@@ -1,10 +1,11 @@
-import '/components/add_location/add_location_widget.dart';
+import '/components/revenue_cat_subsription_paywall_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import '/navigation/business_manager_nav/business_manager_nav_widget.dart';
+import '/flutter_flow/revenue_cat_util.dart' as revenue_cat;
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -38,6 +39,53 @@ class _BusinessPlanWidgetState extends State<BusinessPlanWidget> {
 
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'BusinessPlan'});
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      logFirebaseEvent('BUSINESS_PLAN_BusinessPlan_ON_INIT_STATE');
+      if (!isWeb) {
+        logFirebaseEvent('BusinessPlan_revenue_cat');
+        final isEntitled = await revenue_cat.isEntitled('Floret') ?? false;
+        if (!isEntitled) {
+          await revenue_cat.loadOfferings();
+        }
+
+        if (isEntitled) {
+          return;
+        }
+
+        logFirebaseEvent('BusinessPlan_revenue_cat');
+        final isEntitled = await revenue_cat.isEntitled('Brand') ?? false;
+        if (!isEntitled) {
+          await revenue_cat.loadOfferings();
+        }
+
+        if (isEntitled) {
+          return;
+        }
+
+        logFirebaseEvent('BusinessPlan_bottom_sheet');
+        await showModalBottomSheet(
+          isScrollControlled: true,
+          backgroundColor: Colors.transparent,
+          enableDrag: false,
+          context: context,
+          builder: (context) {
+            return WebViewAware(
+              child: GestureDetector(
+                onTap: () => _model.unfocusNode.canRequestFocus
+                    ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+                    : FocusScope.of(context).unfocus(),
+                child: Padding(
+                  padding: MediaQuery.viewInsetsOf(context),
+                  child: const RevenueCatSubsriptionPaywallWidget(),
+                ),
+              ),
+            );
+          },
+        ).then((value) => safeSetState(() {}));
+      }
+    });
+
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -207,87 +255,6 @@ class _BusinessPlanWidgetState extends State<BusinessPlanWidget> {
                                                         .headlineMedium,
                                               ),
                                             ),
-                                            FFButtonWidget(
-                                              onPressed: () async {
-                                                logFirebaseEvent(
-                                                    'BUSINESS_PLAN_PAGE_NEW_BTN_ON_TAP');
-                                                logFirebaseEvent(
-                                                    'Button_bottom_sheet');
-                                                await showModalBottomSheet(
-                                                  isScrollControlled: true,
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                  enableDrag: false,
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return WebViewAware(
-                                                      child: GestureDetector(
-                                                        onTap: () => _model
-                                                                .unfocusNode
-                                                                .canRequestFocus
-                                                            ? FocusScope.of(
-                                                                    context)
-                                                                .requestFocus(_model
-                                                                    .unfocusNode)
-                                                            : FocusScope.of(
-                                                                    context)
-                                                                .unfocus(),
-                                                        child: Padding(
-                                                          padding: MediaQuery
-                                                              .viewInsetsOf(
-                                                                  context),
-                                                          child:
-                                                              AddLocationWidget(
-                                                            business:
-                                                                widget.business,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    );
-                                                  },
-                                                ).then((value) =>
-                                                    safeSetState(() {}));
-                                              },
-                                              text: 'New',
-                                              options: FFButtonOptions(
-                                                height: 40.0,
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        24.0, 0.0, 24.0, 0.0),
-                                                iconPadding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                            0.0, 0.0, 0.0, 0.0),
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                textStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .titleSmall
-                                                        .override(
-                                                          fontFamily:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleSmallFamily,
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .tertiary,
-                                                          useGoogleFonts: GoogleFonts
-                                                                  .asMap()
-                                                              .containsKey(
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .titleSmallFamily),
-                                                        ),
-                                                elevation: 3.0,
-                                                borderSide: const BorderSide(
-                                                  color: Colors.transparent,
-                                                  width: 1.0,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                              ),
-                                            ),
                                           ],
                                         ),
                                         Padding(
@@ -317,6 +284,143 @@ class _BusinessPlanWidgetState extends State<BusinessPlanWidget> {
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  if (revenue_cat.activeEntitlementIds.isNotEmpty)
+                                    InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        logFirebaseEvent(
+                                            'BUSINESS_PLAN_PAGE_cardTable_6_ON_TAP');
+                                        if (!isWeb) {
+                                          logFirebaseEvent(
+                                              'cardTable_6_revenue_cat');
+                                          final isEntitled = await revenue_cat
+                                                  .isEntitled('Floret') ??
+                                              false;
+                                          if (!isEntitled) {
+                                            await revenue_cat.loadOfferings();
+                                          }
+
+                                          if (!isEntitled) {
+                                            logFirebaseEvent(
+                                                'cardTable_6_bottom_sheet');
+                                            await showModalBottomSheet(
+                                              isScrollControlled: true,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              enableDrag: false,
+                                              context: context,
+                                              builder: (context) {
+                                                return WebViewAware(
+                                                  child: GestureDetector(
+                                                    onTap: () => _model
+                                                            .unfocusNode
+                                                            .canRequestFocus
+                                                        ? FocusScope.of(context)
+                                                            .requestFocus(_model
+                                                                .unfocusNode)
+                                                        : FocusScope.of(context)
+                                                            .unfocus(),
+                                                    child: Padding(
+                                                      padding: MediaQuery
+                                                          .viewInsetsOf(
+                                                              context),
+                                                      child:
+                                                          const RevenueCatSubsriptionPaywallWidget(),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            ).then(
+                                                (value) => safeSetState(() {}));
+                                          }
+                                        }
+                                      },
+                                      child: Container(
+                                        width: double.infinity,
+                                        constraints: const BoxConstraints(
+                                          maxWidth: 1270.0,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryBackground,
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                          border: Border.all(
+                                            color: FlutterFlowTheme.of(context)
+                                                .lineColor,
+                                            width: 1.0,
+                                          ),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(16.0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Expanded(
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      0.0,
+                                                                      0.0,
+                                                                      12.0,
+                                                                      0.0),
+                                                          child: Text(
+                                                            'Manage Plan',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .headlineMedium,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  4.0,
+                                                                  12.0,
+                                                                  0.0),
+                                                      child: Text(
+                                                        'Manage locations that show on your profile',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .labelMedium,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                ],
                               ),
                             ),
                           ),

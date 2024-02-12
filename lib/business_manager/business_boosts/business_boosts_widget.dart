@@ -400,6 +400,7 @@ class _BusinessBoostsWidgetState extends State<BusinessBoostsWidget> {
                                                       return ListView.separated(
                                                         padding:
                                                             EdgeInsets.zero,
+                                                        primary: false,
                                                         shrinkWrap: true,
                                                         scrollDirection:
                                                             Axis.vertical,

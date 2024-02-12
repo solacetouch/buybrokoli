@@ -249,6 +249,7 @@ class _BusinessListingWidgetState extends State<BusinessListingWidget> {
                                           child: Padding(
                                             padding: const EdgeInsets.all(16.0),
                                             child: SingleChildScrollView(
+                                              primary: false,
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 crossAxisAlignment:

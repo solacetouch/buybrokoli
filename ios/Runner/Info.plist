@@ -58,13 +58,15 @@
 	<true/>
 
 	<key>NSLocationWhenInUseUsageDescription</key>
-    <string>To search nearby enable location sharing</string>
+    <string>To search businesses nearby enable location sharing</string>
 	<key>NSCameraUsageDescription</key>
     <string>To upload photos for reviews, messages, and businesses</string>
 	<key>NSPhotoLibraryUsageDescription</key>
     <string>To upload photos for reviews, messages, and businesses</string>
 	<key>PermissionGroupNotification</key>
     <string>To receive notifications for messages and transactions enable push notifications</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>To search businesses nearby enable location sharing</string>
     <key>UIBackgroundModes</key>
     <array>
         <string>fetch</string>
