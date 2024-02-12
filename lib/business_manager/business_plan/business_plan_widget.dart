@@ -42,46 +42,48 @@ class _BusinessPlanWidgetState extends State<BusinessPlanWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       logFirebaseEvent('BUSINESS_PLAN_BusinessPlan_ON_INIT_STATE');
-      logFirebaseEvent('BusinessPlan_revenue_cat');
-      final isEntitled = await revenue_cat.isEntitled('Floret') ?? false;
-      if (!isEntitled) {
-        await revenue_cat.loadOfferings();
-      }
+      if (!isWeb) {
+        logFirebaseEvent('BusinessPlan_revenue_cat');
+        final isEntitled = await revenue_cat.isEntitled('Floret') ?? false;
+        if (!isEntitled) {
+          await revenue_cat.loadOfferings();
+        }
 
-      if (isEntitled) {
-        return;
-      }
+        if (isEntitled) {
+          return;
+        }
 
-      logFirebaseEvent('BusinessPlan_revenue_cat');
-      final isEntitled = await revenue_cat.isEntitled('Brand') ?? false;
-      if (!isEntitled) {
-        await revenue_cat.loadOfferings();
-      }
+        logFirebaseEvent('BusinessPlan_revenue_cat');
+        final isEntitled = await revenue_cat.isEntitled('Brand') ?? false;
+        if (!isEntitled) {
+          await revenue_cat.loadOfferings();
+        }
 
-      if (isEntitled) {
-        return;
-      }
+        if (isEntitled) {
+          return;
+        }
 
-      logFirebaseEvent('BusinessPlan_bottom_sheet');
-      await showModalBottomSheet(
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        enableDrag: false,
-        context: context,
-        builder: (context) {
-          return WebViewAware(
-            child: GestureDetector(
-              onTap: () => _model.unfocusNode.canRequestFocus
-                  ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-                  : FocusScope.of(context).unfocus(),
-              child: Padding(
-                padding: MediaQuery.viewInsetsOf(context),
-                child: const RevenueCatSubsriptionPaywallWidget(),
+        logFirebaseEvent('BusinessPlan_bottom_sheet');
+        await showModalBottomSheet(
+          isScrollControlled: true,
+          backgroundColor: Colors.transparent,
+          enableDrag: false,
+          context: context,
+          builder: (context) {
+            return WebViewAware(
+              child: GestureDetector(
+                onTap: () => _model.unfocusNode.canRequestFocus
+                    ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+                    : FocusScope.of(context).unfocus(),
+                child: Padding(
+                  padding: MediaQuery.viewInsetsOf(context),
+                  child: const RevenueCatSubsriptionPaywallWidget(),
+                ),
               ),
-            ),
-          );
-        },
-      ).then((value) => safeSetState(() {}));
+            );
+          },
+        ).then((value) => safeSetState(() {}));
+      }
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -295,46 +297,49 @@ class _BusinessPlanWidgetState extends State<BusinessPlanWidget> {
                                       onTap: () async {
                                         logFirebaseEvent(
                                             'BUSINESS_PLAN_PAGE_cardTable_6_ON_TAP');
-                                        logFirebaseEvent(
-                                            'cardTable_6_revenue_cat');
-                                        final isEntitled = await revenue_cat
-                                                .isEntitled('Floret') ??
-                                            false;
-                                        if (!isEntitled) {
-                                          await revenue_cat.loadOfferings();
-                                        }
-
-                                        if (!isEntitled) {
+                                        if (!isWeb) {
                                           logFirebaseEvent(
-                                              'cardTable_6_bottom_sheet');
-                                          await showModalBottomSheet(
-                                            isScrollControlled: true,
-                                            backgroundColor: Colors.transparent,
-                                            enableDrag: false,
-                                            context: context,
-                                            builder: (context) {
-                                              return WebViewAware(
-                                                child: GestureDetector(
-                                                  onTap: () => _model
-                                                          .unfocusNode
-                                                          .canRequestFocus
-                                                      ? FocusScope.of(context)
-                                                          .requestFocus(_model
-                                                              .unfocusNode)
-                                                      : FocusScope.of(context)
-                                                          .unfocus(),
-                                                  child: Padding(
-                                                    padding:
-                                                        MediaQuery.viewInsetsOf(
-                                                            context),
-                                                    child:
-                                                        const RevenueCatSubsriptionPaywallWidget(),
+                                              'cardTable_6_revenue_cat');
+                                          final isEntitled = await revenue_cat
+                                                  .isEntitled('Floret') ??
+                                              false;
+                                          if (!isEntitled) {
+                                            await revenue_cat.loadOfferings();
+                                          }
+
+                                          if (!isEntitled) {
+                                            logFirebaseEvent(
+                                                'cardTable_6_bottom_sheet');
+                                            await showModalBottomSheet(
+                                              isScrollControlled: true,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              enableDrag: false,
+                                              context: context,
+                                              builder: (context) {
+                                                return WebViewAware(
+                                                  child: GestureDetector(
+                                                    onTap: () => _model
+                                                            .unfocusNode
+                                                            .canRequestFocus
+                                                        ? FocusScope.of(context)
+                                                            .requestFocus(_model
+                                                                .unfocusNode)
+                                                        : FocusScope.of(context)
+                                                            .unfocus(),
+                                                    child: Padding(
+                                                      padding: MediaQuery
+                                                          .viewInsetsOf(
+                                                              context),
+                                                      child:
+                                                          const RevenueCatSubsriptionPaywallWidget(),
+                                                    ),
                                                   ),
-                                                ),
-                                              );
-                                            },
-                                          ).then(
-                                              (value) => safeSetState(() {}));
+                                                );
+                                              },
+                                            ).then(
+                                                (value) => safeSetState(() {}));
+                                          }
                                         }
                                       },
                                       child: Container(

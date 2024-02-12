@@ -4906,6 +4906,7 @@ class _BusinessProfileWidgetState extends State<BusinessProfileWidget>
                                                                 padding:
                                                                     EdgeInsets
                                                                         .zero,
+                                                                primary: false,
                                                                 shrinkWrap:
                                                                     true,
                                                                 scrollDirection:
@@ -5720,6 +5721,7 @@ class _BusinessProfileWidgetState extends State<BusinessProfileWidget>
                                                                 padding:
                                                                     EdgeInsets
                                                                         .zero,
+                                                                primary: false,
                                                                 shrinkWrap:
                                                                     true,
                                                                 scrollDirection:
@@ -8276,8 +8278,8 @@ class _BusinessProfileWidgetState extends State<BusinessProfileWidget>
                                                                   padding:
                                                                       EdgeInsets
                                                                           .zero,
-                                                                  shrinkWrap:
-                                                                      true,
+                                                                  primary:
+                                                                      false,
                                                                   scrollDirection:
                                                                       Axis.vertical,
                                                                   itemCount:
@@ -8822,6 +8824,8 @@ class _BusinessProfileWidgetState extends State<BusinessProfileWidget>
                                                                   padding:
                                                                       EdgeInsets
                                                                           .zero,
+                                                                  primary:
+                                                                      false,
                                                                   shrinkWrap:
                                                                       true,
                                                                   scrollDirection:

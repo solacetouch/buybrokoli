@@ -204,46 +204,48 @@ class _RevenueCatSubsriptionPaywallWidgetState
                                         onPressed: () async {
                                           logFirebaseEvent(
                                               'REVENUE_CAT_SUBSRIPTION_PAYWALL_BUY_BTN_');
-                                          logFirebaseEvent(
-                                              'Button_revenue_cat');
-                                          _model.didPurchaseMonth =
-                                              await revenue_cat.purchasePackage(
-                                                  revenue_cat
-                                                      .offerings!
-                                                      .current!
-                                                      .monthly!
-                                                      .identifier);
-                                          if (_model.didPurchaseMonth!) {
+                                          if (!isWeb) {
                                             logFirebaseEvent(
-                                                'Button_backend_call');
+                                                'Button_revenue_cat');
+                                            _model.didPurchaseMonth =
+                                                await revenue_cat
+                                                    .purchasePackage(revenue_cat
+                                                        .offerings!
+                                                        .current!
+                                                        .monthly!
+                                                        .identifier);
+                                            if (_model.didPurchaseMonth!) {
+                                              logFirebaseEvent(
+                                                  'Button_backend_call');
 
-                                            await currentUserReference!
-                                                .update(createUsersRecordData(
-                                              subscriptionPackage: _model
-                                                  .didPurchaseMonth
-                                                  ?.toString(),
-                                            ));
-                                            logFirebaseEvent(
-                                                'Button_bottom_sheet');
-                                            Navigator.pop(context);
-                                          } else {
-                                            logFirebaseEvent(
-                                                'Button_show_snack_bar');
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              const SnackBar(
-                                                content: Text(
-                                                  'Unable to purchase!',
-                                                  style: TextStyle(
-                                                    color: Color(0xFFF8FAFF),
+                                              await currentUserReference!
+                                                  .update(createUsersRecordData(
+                                                subscriptionPackage: _model
+                                                    .didPurchaseMonth
+                                                    ?.toString(),
+                                              ));
+                                              logFirebaseEvent(
+                                                  'Button_bottom_sheet');
+                                              Navigator.pop(context);
+                                            } else {
+                                              logFirebaseEvent(
+                                                  'Button_show_snack_bar');
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                const SnackBar(
+                                                  content: Text(
+                                                    'Unable to purchase!',
+                                                    style: TextStyle(
+                                                      color: Color(0xFFF8FAFF),
+                                                    ),
                                                   ),
+                                                  duration: Duration(
+                                                      milliseconds: 4000),
+                                                  backgroundColor:
+                                                      Color(0xFF0B0D17),
                                                 ),
-                                                duration: Duration(
-                                                    milliseconds: 4000),
-                                                backgroundColor:
-                                                    Color(0xFF0B0D17),
-                                              ),
-                                            );
+                                              );
+                                            }
                                           }
 
                                           setState(() {});
@@ -389,6 +391,14 @@ class _RevenueCatSubsriptionPaywallWidgetState
                                         onPressed: () async {
                                           logFirebaseEvent(
                                               'REVENUE_CAT_SUBSRIPTION_PAYWALL_BUY_BTN_');
+                                          var shouldSetState = false;
+                                          if (isWeb) {
+                                            if (shouldSetState) {
+                                              setState(() {});
+                                            }
+                                            return;
+                                          }
+
                                           logFirebaseEvent(
                                               'Button_revenue_cat');
                                           _model.didPurchaseYear =
@@ -398,6 +408,7 @@ class _RevenueCatSubsriptionPaywallWidgetState
                                                       .current!
                                                       .annual!
                                                       .identifier);
+                                          shouldSetState = true;
                                           if (_model.didPurchaseYear!) {
                                             logFirebaseEvent(
                                                 'Button_bottom_sheet');
@@ -422,7 +433,7 @@ class _RevenueCatSubsriptionPaywallWidgetState
                                             );
                                           }
 
-                                          setState(() {});
+                                          if (shouldSetState) setState(() {});
                                         },
                                         text: 'Buy',
                                         options: FFButtonOptions(
@@ -476,8 +487,10 @@ class _RevenueCatSubsriptionPaywallWidgetState
                         onPressed: () async {
                           logFirebaseEvent(
                               'REVENUE_CAT_SUBSRIPTION_PAYWALL_RestoreP');
-                          logFirebaseEvent('RestorePurchases_revenue_cat');
-                          await revenue_cat.restorePurchases();
+                          if (!isWeb) {
+                            logFirebaseEvent('RestorePurchases_revenue_cat');
+                            await revenue_cat.restorePurchases();
+                          }
                         },
                         text: 'Restore Purchases',
                         options: FFButtonOptions(

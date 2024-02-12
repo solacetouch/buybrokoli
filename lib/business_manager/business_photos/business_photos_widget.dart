@@ -223,6 +223,7 @@ class _BusinessPhotosWidgetState extends State<BusinessPhotosWidget> {
                                           child: Padding(
                                             padding: const EdgeInsets.all(16.0),
                                             child: SingleChildScrollView(
+                                              primary: false,
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 crossAxisAlignment:
@@ -582,6 +583,7 @@ class _BusinessPhotosWidgetState extends State<BusinessPhotosWidget> {
                                           child: Padding(
                                             padding: const EdgeInsets.all(16.0),
                                             child: SingleChildScrollView(
+                                              primary: false,
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 crossAxisAlignment:
@@ -852,6 +854,7 @@ class _BusinessPhotosWidgetState extends State<BusinessPhotosWidget> {
                                           child: Padding(
                                             padding: const EdgeInsets.all(16.0),
                                             child: SingleChildScrollView(
+                                              primary: false,
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 crossAxisAlignment:
@@ -1133,6 +1136,8 @@ class _BusinessPhotosWidgetState extends State<BusinessPhotosWidget> {
                                                                     childAspectRatio:
                                                                         1.0,
                                                                   ),
+                                                                  primary:
+                                                                      false,
                                                                   scrollDirection:
                                                                       Axis.vertical,
                                                                   itemCount:
