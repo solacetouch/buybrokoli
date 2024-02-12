@@ -42,48 +42,42 @@ class _BusinessPlanWidgetState extends State<BusinessPlanWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       logFirebaseEvent('BUSINESS_PLAN_BusinessPlan_ON_INIT_STATE');
-      if (!isWeb) {
-        logFirebaseEvent('BusinessPlan_revenue_cat');
-        final isEntitled = await revenue_cat.isEntitled('Floret') ?? false;
-        if (!isEntitled) {
-          await revenue_cat.loadOfferings();
-        }
-
-        if (isEntitled) {
-          return;
-        }
-
-        logFirebaseEvent('BusinessPlan_revenue_cat');
-        final isEntitled = await revenue_cat.isEntitled('Brand') ?? false;
-        if (!isEntitled) {
-          await revenue_cat.loadOfferings();
-        }
-
-        if (isEntitled) {
-          return;
-        }
-
-        logFirebaseEvent('BusinessPlan_bottom_sheet');
-        await showModalBottomSheet(
-          isScrollControlled: true,
-          backgroundColor: Colors.transparent,
-          enableDrag: false,
-          context: context,
-          builder: (context) {
-            return WebViewAware(
-              child: GestureDetector(
-                onTap: () => _model.unfocusNode.canRequestFocus
-                    ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-                    : FocusScope.of(context).unfocus(),
-                child: Padding(
-                  padding: MediaQuery.viewInsetsOf(context),
-                  child: const RevenueCatSubsriptionPaywallWidget(),
-                ),
-              ),
-            );
-          },
-        ).then((value) => safeSetState(() {}));
+      if (isWeb) {
+        return;
       }
+
+      logFirebaseEvent('BusinessPlan_revenue_cat');
+      final isEntitled = await revenue_cat.isEntitled('Floret') ?? false;
+      if (!isEntitled) {
+        await revenue_cat.loadOfferings();
+      }
+
+      if (isEntitled) {
+        return;
+      }
+
+      logFirebaseEvent('BusinessPlan_bottom_sheet');
+      await showModalBottomSheet(
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        enableDrag: false,
+        context: context,
+        builder: (context) {
+          return WebViewAware(
+            child: GestureDetector(
+              onTap: () => _model.unfocusNode.canRequestFocus
+                  ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+                  : FocusScope.of(context).unfocus(),
+              child: Padding(
+                padding: MediaQuery.viewInsetsOf(context),
+                child: const RevenueCatSubsriptionPaywallWidget(),
+              ),
+            ),
+          );
+        },
+      ).then((value) => safeSetState(() {}));
+
+      return;
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
