@@ -79,9 +79,4 @@ flutter {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
-// Dependency on a billing
-    def billing_version = "6.1.0" // releases 11.2023
-    implementation "com.android.billingclient:billing:$billing_version"
-}
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version
