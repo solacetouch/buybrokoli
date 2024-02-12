@@ -24,6 +24,7 @@ import 'schema/promos_record.dart';
 import 'schema/feed_record.dart';
 import 'schema/services_record.dart';
 import 'schema/hours_record.dart';
+import 'schema/purchases_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart';
@@ -50,6 +51,7 @@ export 'schema/promos_record.dart';
 export 'schema/feed_record.dart';
 export 'schema/services_record.dart';
 export 'schema/hours_record.dart';
+export 'schema/purchases_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -752,6 +754,43 @@ Future<List<HoursRecord>> queryHoursRecordOnce({
     queryCollectionOnce(
       HoursRecord.collection(parent),
       HoursRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query PurchasesRecords (as a Stream and as a Future).
+Future<int> queryPurchasesRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      PurchasesRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<PurchasesRecord>> queryPurchasesRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      PurchasesRecord.collection,
+      PurchasesRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<PurchasesRecord>> queryPurchasesRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      PurchasesRecord.collection,
+      PurchasesRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,

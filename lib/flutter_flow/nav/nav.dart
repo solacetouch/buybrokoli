@@ -164,9 +164,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               requireAuth: true,
               asyncParams: {
                 'chatUser': getDoc(['users'], UsersRecord.fromSnapshot),
+                'chatRefDoc': getDoc(['chats'], ChatsRecord.fromSnapshot),
               },
               builder: (context, params) => ChatWidget(
                 chatUser: params.getParam('chatUser', ParamType.Document),
+                chatRefDoc: params.getParam('chatRefDoc', ParamType.Document),
                 chatRef: params.getParam(
                     'chatRef', ParamType.DocumentReference, false, ['chats']),
               ),

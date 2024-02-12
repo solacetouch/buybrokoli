@@ -142,6 +142,8 @@ final parametersBuilderMap =
         allParams: {
           'chatUser': await getDocumentParameter<UsersRecord>(
               data, 'chatUser', UsersRecord.fromSnapshot),
+          'chatRefDoc': await getDocumentParameter<ChatsRecord>(
+              data, 'chatRefDoc', ChatsRecord.fromSnapshot),
           'chatRef': getParameter<DocumentReference>(data, 'chatRef'),
         },
       ),

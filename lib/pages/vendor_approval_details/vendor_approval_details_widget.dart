@@ -224,6 +224,7 @@ class _VendorApprovalDetailsWidgetState
                                 key: _model.formKey,
                                 autovalidateMode: AutovalidateMode.always,
                                 child: SingleChildScrollView(
+                                  primary: false,
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
                                     crossAxisAlignment:

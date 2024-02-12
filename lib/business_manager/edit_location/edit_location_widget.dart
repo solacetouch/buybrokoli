@@ -502,6 +502,7 @@ class _EditLocationWidgetState extends State<EditLocationWidget> {
                                                 .secondaryBackground,
                                           ),
                                           child: SingleChildScrollView(
+                                            primary: false,
                                             child: Column(
                                               mainAxisSize: MainAxisSize.max,
                                               children: [

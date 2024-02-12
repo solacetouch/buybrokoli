@@ -60,6 +60,11 @@ class ChatsRecord extends FirestoreRecord {
   DocumentReference? get business => _business;
   bool hasBusiness() => _business != null;
 
+  // "blocked" field.
+  bool? _blocked;
+  bool get blocked => _blocked ?? false;
+  bool hasBlocked() => _blocked != null;
+
   void _initializeFields() {
     _users = getDataList(snapshotData['users']);
     _userA = snapshotData['user_a'] as DocumentReference?;
@@ -71,6 +76,7 @@ class ChatsRecord extends FirestoreRecord {
     _lastMessageSeenBy = getDataList(snapshotData['last_message_seen_by']);
     _vendorName = snapshotData['vendor_name'] as String?;
     _business = snapshotData['business'] as DocumentReference?;
+    _blocked = snapshotData['blocked'] as bool?;
   }
 
   static CollectionReference get collection =>
@@ -114,6 +120,7 @@ Map<String, dynamic> createChatsRecordData({
   DocumentReference? lastMessageSentBy,
   String? vendorName,
   DocumentReference? business,
+  bool? blocked,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -124,6 +131,7 @@ Map<String, dynamic> createChatsRecordData({
       'last_message_sent_by': lastMessageSentBy,
       'vendor_name': vendorName,
       'business': business,
+      'blocked': blocked,
     }.withoutNulls,
   );
 
@@ -144,7 +152,8 @@ class ChatsRecordDocumentEquality implements Equality<ChatsRecord> {
         e1?.lastMessageSentBy == e2?.lastMessageSentBy &&
         listEquality.equals(e1?.lastMessageSeenBy, e2?.lastMessageSeenBy) &&
         e1?.vendorName == e2?.vendorName &&
-        e1?.business == e2?.business;
+        e1?.business == e2?.business &&
+        e1?.blocked == e2?.blocked;
   }
 
   @override
@@ -157,7 +166,8 @@ class ChatsRecordDocumentEquality implements Equality<ChatsRecord> {
         e?.lastMessageSentBy,
         e?.lastMessageSeenBy,
         e?.vendorName,
-        e?.business
+        e?.business,
+        e?.blocked
       ]);
 
   @override

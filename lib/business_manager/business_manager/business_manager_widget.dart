@@ -248,6 +248,7 @@ class _BusinessManagerWidgetState extends State<BusinessManagerWidget> {
                               FlutterFlowTheme.of(context).secondaryBackground,
                           borderRadius: BorderRadius.circular(12.0),
                         ),
+                        alignment: const AlignmentDirectional(-1.0, 0.0),
                         child: wrapWithModel(
                           model: _model.businessManagerNavModel1,
                           updateCallback: () => setState(() {}),
@@ -1548,6 +1549,7 @@ class _BusinessManagerWidgetState extends State<BusinessManagerWidget> {
                                                               padding:
                                                                   EdgeInsets
                                                                       .zero,
+                                                              primary: false,
                                                               scrollDirection:
                                                                   Axis.vertical,
                                                               itemCount:
@@ -1953,6 +1955,7 @@ class _BusinessManagerWidgetState extends State<BusinessManagerWidget> {
                                                               .builder(
                                                             padding:
                                                                 EdgeInsets.zero,
+                                                            primary: false,
                                                             shrinkWrap: true,
                                                             scrollDirection:
                                                                 Axis.vertical,
@@ -2299,6 +2302,7 @@ class _BusinessManagerWidgetState extends State<BusinessManagerWidget> {
                                                         child: ListView(
                                                           padding:
                                                               EdgeInsets.zero,
+                                                          primary: false,
                                                           scrollDirection:
                                                               Axis.horizontal,
                                                           children: [

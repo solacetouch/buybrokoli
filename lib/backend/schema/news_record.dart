@@ -70,6 +70,11 @@ class NewsRecord extends FirestoreRecord {
   String get timestamp => _timestamp ?? '';
   bool hasTimestamp() => _timestamp != null;
 
+  // "published" field.
+  DateTime? _published;
+  DateTime? get published => _published;
+  bool hasPublished() => _published != null;
+
   void _initializeFields() {
     _title = snapshotData['title'] as String?;
     _author = snapshotData['author'] as String?;
@@ -82,6 +87,7 @@ class NewsRecord extends FirestoreRecord {
     _publisher = snapshotData['publisher'] as String?;
     _views = castToType<int>(snapshotData['views']);
     _timestamp = snapshotData['timestamp'] as String?;
+    _published = snapshotData['published'] as DateTime?;
   }
 
   static CollectionReference get collection =>
@@ -129,6 +135,7 @@ Map<String, dynamic> createNewsRecordData({
   String? publisher,
   int? views,
   String? timestamp,
+  DateTime? published,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -143,6 +150,7 @@ Map<String, dynamic> createNewsRecordData({
       'publisher': publisher,
       'views': views,
       'timestamp': timestamp,
+      'published': published,
     }.withoutNulls,
   );
 
@@ -164,7 +172,8 @@ class NewsRecordDocumentEquality implements Equality<NewsRecord> {
         e1?.topic == e2?.topic &&
         e1?.publisher == e2?.publisher &&
         e1?.views == e2?.views &&
-        e1?.timestamp == e2?.timestamp;
+        e1?.timestamp == e2?.timestamp &&
+        e1?.published == e2?.published;
   }
 
   @override
@@ -179,7 +188,8 @@ class NewsRecordDocumentEquality implements Equality<NewsRecord> {
         e?.topic,
         e?.publisher,
         e?.views,
-        e?.timestamp
+        e?.timestamp,
+        e?.published
       ]);
 
   @override
